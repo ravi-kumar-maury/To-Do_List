@@ -1,31 +1,29 @@
 import React, { useState } from "react";
 import List from "./List";
-import value from "./../value.js";
+//import value from "./../value.js";
 function App() {
-  var newArray = value;
-  const [val1, setValue] = useState(value);
+  //var newArray = value;
+  const [value, setValue] = useState("");
+  const [items, setItem] = useState(["A item"]);
   var inputt = "";
   function handleChange(event) {
     inputt = event.target.value;
-    //setValue(inputt)
+    setValue(inputt);
 
     //console.log(inputt)
   }
   function handleClick(event) {
     //setValue(inputt);
     //console.log(useState.val1)
-    newArray = [{ id: newArray.length + 1, val: inputt }, ...newArray];
-    setValue(newArray);
+    setItem((prevItem) => {
+      return [...prevItem, value];
+    });
+    setValue("");
     //console.log(newArray)
     //value.push({ id: value.length + 1, val: val1 });
 
     //  var li = document.getElementById('list').append('li')
     //   console.log(li)
-  }
-
-  function returnList(item) {
-    console.log(item);
-    return <li key={item.id}>{item.val}</li>;
   }
 
   return (
@@ -34,13 +32,18 @@ function App() {
         <h1>To-Do List</h1>
       </div>
       <div className="form">
-        <input type="text" onChange={handleChange} />
+        <input type="text" onChange={handleChange} value={value} />
         <button onClick={handleClick}>
           <span>Add</span>
         </button>
       </div>
       <div>
-        <ul id="list">{val1.map(returnList)}</ul>
+        <ul id="list">
+          {" "}
+          {items.map((item) => {
+            return <li>{item}</li>;
+          })}
+        </ul>
       </div>
     </div>
   );
